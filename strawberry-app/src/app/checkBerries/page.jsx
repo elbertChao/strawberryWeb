@@ -39,7 +39,7 @@ function CheckBerries() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#FFE6D1]">
+    <div className="flex flex-col items-center justify-center bg-[#FFE6D1]">
       <h2 className="text-3xl font-bold mb-6">Check your berries here</h2>
 
       <div
