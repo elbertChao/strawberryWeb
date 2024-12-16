@@ -1,24 +1,23 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 
 function CheckBerries() {
   const [image, setImage] = useState(null); // state to store uploaded img
   const [isDragging, setIsDragging] = useState(false); // state to track for dragging imgs
 
-  // initial dropped img function
+  // drop function
   const handleDrop = (event) => {
-    event.preventDefault(); // prevent default behavior (e.g., opening the file in the browser)
+    event.preventDefault();
     setIsDragging(false);
-    const file = event.dataTransfer.files[0]; // get the dropped file that the user selects
-    if (file && file.type.startsWith("image/")) { // check for valid images
-      const reader = new FileReader(); // create a FileReader
-      // set and read file
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
       reader.onload = (e) => setImage(e.target.result);
       reader.readAsDataURL(file);
     }
   };
 
-  // img change function
+  // file input function
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -28,51 +27,70 @@ function CheckBerries() {
     }
   };
 
-  // click and drag images from user's folder
+  // drag states
   const handleDragOver = (event) => {
-    event.preventDefault(); // prevent default behavior to allow drop
-    setIsDragging(true); // sets box to red to show users image is sensed
+    event.preventDefault();
+    setIsDragging(true);
   };
 
   const handleDragLeave = () => {
-    setIsDragging(false); // resets dragging state to reset colour of box
+    setIsDragging(false);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[#FFE6D1]">
-      <h2 className="text-3xl font-bold mb-6">Check your berries here</h2>
+    <div
+      className="relative flex items-center justify-center h-screen bg-cover bg-center"
+      style={{ backgroundImage: "url('/strawberry_wall.jpg')" }}
+    >
+      {/* background overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
-      <div
-        className={`w-96 h-64 border-2 border-dashed border-gray-400 flex flex-col items-center justify-center ${
-          isDragging ? "bg-blue-200" : "bg-blue-100"
-        }`}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-      >
-        <p className="text-gray-600 mb-2">Drag & Drop an image here</p>
-        <p className="text-gray-500">or</p>
-        <label
-          htmlFor="fileInput"
-          className="mt-2 bg-blue-500 text-white py-1 px-4 rounded cursor-pointer hover:bg-blue-600"
+      {/* content wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-4">
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
+          Check Your Berries Here
+        </h2>
+
+        {/* drag/drop box */}
+        <div
+          className={`w-96 h-64 border-2 border-dashed ${
+            isDragging
+              ? "border-red-400 bg-red-100"
+              : "border-gray-300 bg-white bg-opacity-90"
+          } flex flex-col items-center justify-center text-gray-700 rounded-lg shadow-lg transition`}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
         >
-          Choose a File
-        </label>
-        <input
-          id="fileInput"
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-      </div>
-
-      {image && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Uploaded Image:</h3>
-          <img src={image} alt="Uploaded" className="max-w-md max-h-96 rounded shadow" />
+          <p className="text-lg mb-2">Drag & Drop an image here</p>
+          <p className="text-sm text-gray-500">or</p>
+          <label
+            htmlFor="fileInput"
+            className="mt-4 bg-red-500 text-white py-2 px-6 rounded-lg cursor-pointer hover:bg-[#0e771a] transition duration-300"
+          >
+            Choose a File
+          </label>
+          <input
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+          />
         </div>
-      )}
+
+        {/* preview of uploaded img */}
+        {image && (
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4">Uploaded Image:</h3>
+            <img
+              src={image}
+              alt="Uploaded"
+              className="max-w-md max-h-96 rounded-lg shadow-2xl"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -12,17 +12,19 @@ function Header() {
   }, []);
 
   return (
-    <div className="p-4 md:p-6 bg-gradient-to-r from-[#FF4A4A] to-[#FF6B6B] shadow-lg">
+    <div className="sticky top-0 z-50 p-4 md:p-6 bg-gradient-to-r from-[#FF4A4A] to-[#0e771a] shadow-lg">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
-        {/* Logo */}
+        {/* logo styling */}
         <Link href="/" className="flex items-center space-x-2">
-          <Image src="/logo.png" width={60} height={60} alt="logo" />
+          <div className="transform transition-transform duration-300 hover:scale-125">
+            <Image src="/logo.png" width={60} height={60} alt="logo" />
+          </div>
           <span className="text-white text-2xl font-bold tracking-wide">
             BerryVision
           </span>
         </Link>
 
-        {/* Navigation Links */}
+        {/* nav inks */}
         <ul className="flex gap-6 text-white text-lg">
           <li>
             <Link

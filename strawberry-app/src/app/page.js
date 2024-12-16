@@ -16,7 +16,7 @@ export default function Home() {
         </p>
         <a
           href="/checkBerries"
-          className="mt-6 px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-red-600 transition duration-300"
+          className="mt-6 px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-[#0e771a] transition duration-300"
         >
           Check Berries
         </a>
