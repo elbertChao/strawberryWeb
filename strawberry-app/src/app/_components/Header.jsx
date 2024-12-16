@@ -1,33 +1,37 @@
-"use client"
-import { Button } from '@/components/ui/button'
-import { LogIn} from 'lucide-react'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
-import Link from "next/link"
+"use client";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
+import Link from "next/link";
 
 function Header() {
   const path = usePathname();
 
-  useEffect(()=> {
-    console.log(path);    
+  useEffect(() => {
+    console.log(path);
   }, []);
 
   return (
-    <div className='p-6 px-10 bg-[#FFE6D1] flex items-center justify-center'>
-      <div className='flex items-center space-x-16'>
-        <Link href="/" className="hover:scale-110 transition-transform duration-300">
-          <Image src={"/logo.png"} width={150} height={150} alt="logo" />
+    <div className="p-4 md:p-6 bg-gradient-to-r from-[#FF4A4A] to-[#FF6B6B] shadow-lg">
+      <div className="flex justify-between items-center max-w-7xl mx-auto">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-2">
+          <Image src="/logo.png" width={60} height={60} alt="logo" />
+          <span className="text-white text-2xl font-bold tracking-wide">
+            BerryVision
+          </span>
         </Link>
-        <ul className="hidden md:flex gap-10 text-center">
+
+        {/* Navigation Links */}
+        <ul className="flex gap-6 text-white text-lg">
           <li>
             <Link
               href="/checkBerries"
               className={`${
                 path === "/checkBerries"
-                  ? "text-primary font-bold"
-                  : "hover:text-primary"
-              } text-lg cursor-pointer`}
+                  ? "border-b-2 border-white pb-1"
+                  : "hover:border-b-2 hover:border-white pb-1 transition duration-300"
+              }`}
             >
               Check Berries
             </Link>
@@ -35,35 +39,15 @@ function Header() {
           <li>
             <Link
               href="/about"
-              className={`${
-                path === "/about"
-                  ? "text-primary font-bold"
-                  : "hover:text-primary"
-              } text-lg cursor-pointer`}
+              className="hover:border-b-2 hover:border-white pb-1 transition duration-300"
             >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/contact"
-              className={`${
-                path === "/contact"
-                  ? "text-primary font-bold"
-                  : "hover:text-primary"
-              } text-lg cursor-pointer`}
-            >
-              Contact
+              About Us
             </Link>
           </li>
         </ul>
       </div>
-
-      <div className='px-10 flex gap-2 justify-between'>
-        <Button className='hover:bg-red-400'><LogIn/>Login</Button>
-      </div>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;
