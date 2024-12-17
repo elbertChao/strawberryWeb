@@ -20,9 +20,11 @@ def return_home():
 if __name__ == "__main__":
     app.run(debug = True) # REMOVE debug=True once you want to deploy to production
 
-import torch
+
+
 
 # THE FOLLOWING IS JUST TO CHECK IF PYTORCH WITH CPU CUDA IS INSTALLED CORRECTLY
+# ---------------------------------------------------------------------------------- #
 # # check PyTorch version
 # print("PyTorch version:", torch.__version__)
 # # check if CUDA is available (should be False for CPU-only version)
@@ -38,3 +40,4 @@ import torch
 # y = x + x
 # print("Tensor operation result:")
 # print(y)
+# ---------------------------------------------------------------------------------- #
