@@ -4,26 +4,57 @@ import React, { useState } from "react";
 function CheckBerries() {
   const [image, setImage] = useState(null); // state to store uploaded img
   const [isDragging, setIsDragging] = useState(false); // state to track for dragging imgs
+  const [responseMessage, setResponseMessage] = useState(null); // state for API response
+  const [isLoading, setIsLoading] = useState(false);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/api/upload"; // ERORR OCCURS WHEN USING THIS, NOTED...
+
+  const processFile = async (file) => {
+    setIsLoading(true);
+    const reader = new FileReader();
+    reader.onload = (e) => setImage(e.target.result);
+    reader.readAsDataURL(file);
+  
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to upload file.");
+      }
+  
+      const data = await response.text();
+      setResponseMessage(data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      if (error.message.includes("Failed to fetch")) {
+        setResponseMessage("Could not connect to the server. Please try again later.");
+      } else {
+        setResponseMessage("An error occurred while uploading the file. Please try again.");
+      }
+    }
+    setIsLoading(false);
+  };
 
   // drop function
-  const handleDrop = (event) => {
+  const handleDrop = async (event) => {
     event.preventDefault();
     setIsDragging(false);
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => setImage(e.target.result);
-      reader.readAsDataURL(file);
+      await processFile(file);
     }
   };
 
   // file input function
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => setImage(e.target.result);
-      reader.readAsDataURL(file);
+      await processFile(file);
     }
   };
 
@@ -90,6 +121,11 @@ function CheckBerries() {
             />
           </div>
         )}
+
+        {responseMessage && (
+          <p className="mt-6 text-lg text-green-600">{responseMessage}</p>
+        )}
+        {isLoading && <p className="text-lg text-yellow-500 mt-4">Uploading...</p>}
       </div>
     </div>
   );

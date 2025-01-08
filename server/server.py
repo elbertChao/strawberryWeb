@@ -1,21 +1,30 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+from flask_cors import CORS
 # Pillow Image library used for preimage processing so that each image
 # will be the same size when it is processed
-from PIL import Image
-import io
-import torch
-from torchvision import transforms
-from transformers import ViTForImageClassificiation, ViTFeatureExtractor
+# from PIL import Image
+# import io
+# import torch
+# from torchvision import transforms
+# from transformers import ViTForImageClassificiation, ViTFeatureExtractor
 
 # creating an app instance
 app = Flask(__name__)
+CORS(app)  # enabling CORS for all routes
 
-# GET method at /api/home route
-@app.route("/api/home", methods=['GET'])
-def return_home():
-    return jsonify({
-        'message': "Hello World!"
-    })
+# uploading file api endpoint with POST method
+@app.route("/api/upload", methods=['POST'])
+def upload_file():
+    if 'file' not in request.files: # is file valid?
+        return "File not recognized", 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return "Please drop a file", 400
+    
+    # console logging file name to check if endpoint works
+    print(f"SUCCESS, file found! File is called: {file.filename}")
+    return f"Filename: {file.filename} uploaded successfully!", 200
 
 if __name__ == "__main__":
     app.run(debug = True) # REMOVE debug=True once you want to deploy to production
