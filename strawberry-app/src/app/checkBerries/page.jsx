@@ -6,7 +6,7 @@ function CheckBerries() {
   const [isDragging, setIsDragging] = useState(false); // state to track for dragging imgs
   const [responseMessage, setResponseMessage] = useState(null); // state for API response
   const [isLoading, setIsLoading] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/api/upload"; // ERORR OCCURS WHEN USING THIS, NOTED...
+  const API_URL = process.env.API_URL || "http://127.0.0.1:5000"; // ERORR OCCURS WHEN USING THIS, NOTED...
 
   const processFile = async (file) => {
     setIsLoading(true);
@@ -18,7 +18,7 @@ function CheckBerries() {
     formData.append("file", file);
   
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/upload", {
+      const response = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
