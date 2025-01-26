@@ -6,7 +6,7 @@ function CheckBerries() {
   const [isDragging, setIsDragging] = useState(false); // state to track for dragging imgs
   const [responseMessage, setResponseMessage] = useState(null); // state for API response
   const [isLoading, setIsLoading] = useState(false);
-  const API_URL = process.env.API_URL || "http://127.0.0.1:5000"; // ERORR OCCURS WHEN USING THIS, NOTED...
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"; // ERORR OCCURS WHEN USING THIS, NOTED...
 
   const processFile = async (file) => {
     setIsLoading(true);
@@ -18,6 +18,7 @@ function CheckBerries() {
     formData.append("file", file);
   
     try {
+
       const response = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
@@ -27,8 +28,16 @@ function CheckBerries() {
         throw new Error("Failed to upload file.");
       }
   
-      const data = await response.text();
-      setResponseMessage(data);
+      const data = await response.json(); // should get a json response from Flask API
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // takes prediction from the backend and format the given json into a display on the screen
+      setResponseMessage(
+        `Prediction: ${data.prediction ? data.prediction : "No prediction available"}`
+      );
+
     } catch (error) {
       console.error("Error uploading file:", error);
       if (error.message.includes("Failed to fetch")) {
@@ -122,10 +131,13 @@ function CheckBerries() {
           </div>
         )}
 
+        {/* response message */}
         {responseMessage && (
-          <p className="mt-6 text-lg text-green-600">{responseMessage}</p>
+          <p className="mt-6 text-lg text-green-500">{responseMessage}</p>
         )}
-        {isLoading && <p className="text-lg text-yellow-500 mt-4">Uploading...</p>}
+
+        {/* loading indicator */}
+        {isLoading && <p className="text-lg text-yellow-500 mt-4">Processing...</p>}
       </div>
     </div>
   );
