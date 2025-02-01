@@ -1,0 +1,17 @@
+[33mc48e04d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Add model files using Git LFS
+[33mcd23792[m Remove model files from Git tracking
+[33md100a6c[m Added model files to the gitignore
+[33m176b0e4[m Backend fully functional with ML model, displays prediction on frontend
+[33m43d16e4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m creating an env file and reading the ip address from it instead
+[33m981b0e1[m Subtle css changes & created simple backend point for uploading images
+[33md7c5e89[m rules to check if pytorch is properly installed
+[33me0e2caf[m backend in progress, figuring out how to get output from .ipynb file
+[33md6f4952[m setting up a connection to the jupyter notebook in progress
+[33m3edaa2d[m updated the check berries page to follow styling format of homepage
+[33m8940bc8[m Frontend end design updated and flask backend set up in progress
+[33m26df34e[m Fixing minor spacing on the check berries page
+[33mb1385c6[m images can now be uploaded to the website
+[33mc507151[m File directory and routes created for each page
+[33mfb27c06[m Header in progress
+[33m46e9f29[m initializing next js app
+[33m4dd993e[m Initial commit
