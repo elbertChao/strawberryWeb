@@ -20,6 +20,12 @@ export default function Home() {
         >
           Check Berries
         </a>
+        <a
+          href="/guide"
+          className="mt-6 px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-lg hover:bg-[#0e771a] transition duration-300"
+        >
+          Guide
+        </a>
       </div>
     </div>
   );

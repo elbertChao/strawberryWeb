@@ -40,10 +40,14 @@ function Header() {
           </li>
           <li>
             <Link
-              href="/about"
-              className="hover:border-b-2 hover:border-white pb-1 transition duration-300"
+              href="/guide"
+              className={`${
+                path === "/guide"
+                  ? "border-b-2 border-white pb-1"
+                  : "hover:border-b-2 hover:border-white pb-1 transition duration-300"
+              }`}
             >
-              About Us
+              Guide
             </Link>
           </li>
         </ul>
