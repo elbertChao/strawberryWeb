@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 function CheckBerries() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"; // ERORR OCCURS WHEN USING THIS, NOTED...
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [image, setImage] = useState(null); // state to store uploaded img
   const [isDragging, setIsDragging] = useState(false); // state to track for dragging imgs
   const [responseMessage, setResponseMessage] = useState(null); // state for API response
