@@ -8,7 +8,7 @@ import torch
 
 # creating an app instance
 app = Flask(__name__)
-CORS(app)  # enabling CORS for all routes
+CORS(app, origins=["http://strawberry.uwo.ca"])  # enabling CORS for all routes
 
 # LOADING TRAINED MODEL
 # rb means to read the binary data from the model.pkl file

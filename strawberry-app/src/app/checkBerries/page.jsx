@@ -1,55 +1,56 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 
 function CheckBerries() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const [image, setImage] = useState(null); // state to store uploaded img
-  const [isDragging, setIsDragging] = useState(false); // state to track for dragging imgs
-  const [responseMessage, setResponseMessage] = useState(null); // state for API response
+  const [image, setImage] = useState(null); // Store uploaded image as a preview
+  const [imageFile, setImageFile] = useState(null); // Store the actual file for upload
+  const [isDragging, setIsDragging] = useState(false);
+  const [responseMessage, setResponseMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const processFile = async (file) => {
     setIsLoading(true);
+    setImageFile(file);
+
     const reader = new FileReader();
     reader.onload = (e) => setImage(e.target.result);
     reader.readAsDataURL(file);
-  
+
     const formData = new FormData();
     formData.append("file", file);
-  
-    try {
 
+    try {
       const response = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to upload file.");
       }
-  
-      const data = await response.json(); // should get a json response from Flask API
+
+      const data = await response.json();
       if (data.error) {
         throw new Error(data.error);
       }
 
-      // takes prediction from the backend and format the given json into a display on the screen
       setResponseMessage(
         `Prediction: ${data.prediction ? data.prediction : "No prediction available"}`
       );
-
     } catch (error) {
       console.error("Error uploading file:", error);
-      if (error.message.includes("Failed to fetch")) {
-        setResponseMessage("Could not connect to the server. Please try again later.");
-      } else {
-        setResponseMessage("An error occurred while uploading the file. Please try again.");
-      }
+      setResponseMessage(
+        error.message.includes("Failed to fetch")
+          ? "Could not connect to the server. Please try again later."
+          : "An error occurred while uploading the file. Please try again."
+      );
     }
     setIsLoading(false);
   };
 
-  // drop function
+  // Handle drag & drop
   const handleDrop = async (event) => {
     event.preventDefault();
     setIsDragging(false);
@@ -59,7 +60,7 @@ function CheckBerries() {
     }
   };
 
-  // file input function
+  // Handle file selection
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -67,40 +68,31 @@ function CheckBerries() {
     }
   };
 
-  // drag states
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
   return (
     <div
       className="relative flex items-center justify-center h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/strawberry_wall.jpg')" }}
     >
-      {/* background overlay */}
+      {/* Background overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
-      {/* content wrapper */}
+      {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-4">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
           Check Your Berries Here
         </h2>
 
-        {/* drag/drop box */}
+        {/* Drag & Drop Box */}
         <div
-          className={`w-96 h-64 border-2 border-dashed ${
-            isDragging
-              ? "border-red-400 bg-red-100"
-              : "border-gray-300 bg-white bg-opacity-90"
-          } flex flex-col items-center justify-center text-gray-700 rounded-lg shadow-lg transition`}
+          className={`w-96 h-64 border-2 border-dashed flex flex-col items-center justify-center text-gray-700 rounded-lg shadow-lg transition ${
+            isDragging ? "border-red-400 bg-red-100" : "border-gray-300 bg-white bg-opacity-90"
+          }`}
           onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+          }}
+          onDragLeave={() => setIsDragging(false)}
         >
           <p className="text-lg mb-2">Drag & Drop an image here</p>
           <p className="text-sm text-gray-500">or</p>
@@ -119,24 +111,27 @@ function CheckBerries() {
           />
         </div>
 
-        {/* preview of uploaded img */}
+        {/* Image Preview */}
         {image && (
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">Uploaded Image:</h3>
-            <img
-              src={image}
-              alt="Uploaded"
-              className="max-w-md max-h-96 rounded-lg shadow-2xl"
-            />
+            <div className="relative w-64 h-64 mx-auto">
+              <Image
+                src={image}
+                alt="Uploaded"
+                fill
+                className="object-contain rounded-lg shadow-2xl"
+                sizes="256px"
+                priority
+              />
+            </div>
           </div>
         )}
 
-        {/* response message */}
-        {responseMessage && (
-          <p className="mt-6 text-lg text-green-500">{responseMessage}</p>
-        )}
+        {/* Response Message */}
+        {responseMessage && <p className="mt-6 text-lg text-green-500">{responseMessage}</p>}
 
-        {/* loading indicator */}
+        {/* Loading Indicator */}
         {isLoading && <p className="text-lg text-yellow-500 mt-4">Processing...</p>}
       </div>
     </div>

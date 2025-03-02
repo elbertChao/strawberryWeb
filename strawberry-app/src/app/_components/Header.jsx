@@ -8,8 +8,8 @@ function Header() {
   const path = usePathname();
 
   useEffect(() => {
-    console.log(path);
-  }, []);
+    console.log("Path changed:", path);
+  }, [path]);
 
   return (
     <div className="sticky top-0 z-50 p-4 md:p-6 bg-gradient-to-r from-[#FF4A4A] to-[#0e771a] shadow-lg">
