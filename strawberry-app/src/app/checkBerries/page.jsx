@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 function CheckBerries() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.production.NEXT_PUBLIC_API_URL;
   const [image, setImage] = useState(null); // Store uploaded image as a preview
   const [imageFile, setImageFile] = useState(null); // Store the actual file for upload
   const [isDragging, setIsDragging] = useState(false);
