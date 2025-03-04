@@ -1,4 +1,4 @@
-# 🍓 Strawberry Ripeness & Disease Detection Web App
+# 🍓 BerryVision (A Strawberry Ripeness & Disease Detection Web App)
 AI-Powered Full-Stack Web Application for Monitoring Strawberry Health
 This project provides an AI-driven web application that helps farmers analyze strawberry ripeness and detect diseases using machine learning models. It consists of a Next.js frontend and a Flask backend, integrating a trained model for image segmentation.
 
@@ -59,15 +59,18 @@ Ensure NEXT_PUBLIC_API_URL in .env.production is correctly set
 Restart services: sudo systemctl restart nginx flask
 
 ## 📚 Technologies Used:
+
 🔧 Backend
 Python (Flask, Gunicorn)
 PyTorch (Machine Learning Model)
 REST APIs
 Pickle (Model Serialization)
+
 🎨 Frontend
 Next.js (React Framework)
 Tailwind CSS (UI Styling)
 Axios (API Calls)
+
 🛠️ DevOps & Deployment
 Nginx (Reverse Proxy)
 Gunicorn (Flask Server)
