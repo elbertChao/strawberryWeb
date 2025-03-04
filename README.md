@@ -54,8 +54,11 @@ Demonstrated in a private document created by me (Elbert Chao)
 
 ## 🔍 Troubleshooting
 Use sudo or check file permissions (chmod 644)
+
 Run sudo journalctl -u flask -f to check logs
+
 Ensure NEXT_PUBLIC_API_URL in .env.production is correctly set
+
 Restart services: sudo systemctl restart nginx flask
 
 ## 📚 Technologies Used:
