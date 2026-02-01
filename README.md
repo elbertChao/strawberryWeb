@@ -1,84 +1,108 @@
-# 🍓 BerryVision (A Strawberry Ripeness & Disease Detection Web App)
-AI-Powered Full-Stack Web Application for Monitoring Strawberry Health
-This project provides an AI-driven web application that helps farmers analyze strawberry ripeness and detect diseases using machine learning models. It consists of a Next.js frontend and a Flask backend, integrating a trained model for image segmentation.
-Hosted live here: https://strawberry.uwo.ca/
+# 🍓 BerryVision: Strawberry Ripeness & Disease Detection System
 
-## Features:
-AI-Based Image Processing - Uses a trained ML model to assess strawberry ripeness and disease conditions
-Full-Stack Development - Built with Next.js (frontend) and Flask (backend)
-Fast API Response Times - Optimized REST API with responses under 500ms
-Secure & Scalable Deployment - Hosted on Western University’s domain with Nginx & Gunicorn
-Production-Ready - Includes SSL certificates, firewall protection (UFW), and process management (PM2)
+## Overview
+BerryVision is an AI-powered full-stack web application designed to modernize agricultural monitoring. The system leverages deep learning models to perform real-time image segmentation for assessing strawberry ripeness and detecting disease vectors.
 
-## 💻 How to Set Up & Run the Project:
-1️⃣ Clone the Repository
-git clone https://github.com/elbertChao/strawberryWeb.git
+This project demonstrates the end-to-end integration of a PyTorch machine learning pipeline with a responsive Next.js frontend and a scalable Flask backend.
+
+**Live Deployment:** [https://strawberry.uwo.ca/](https://strawberry.uwo.ca/)
+**System Demonstration:** [Watch Video Demo](https://www.youtube.com/watch?v=d8iLLYVc4kI)
+
+## Key Features
+* **AI-Driven Analysis:** Utilizes a custom-trained machine learning model to segment and classify agricultural imagery with high precision.
+* **High-Performance Architecture:** Optimized REST API delivers inference results with sub-500ms latency.
+* **Production-Grade Security:** Deployed behind an Nginx reverse proxy with SSL/TLS encryption (Sectigo CA) and UFW firewall configuration.
+* **Scalability:** Process management handled via PM2 and Gunicorn to ensure high availability and load balancing.
+
+## Technical Stack
+
+### Backend
+* **Framework:** Python (Flask)
+* **Machine Learning:** PyTorch (Inference Engine)
+* **Server:** Gunicorn (WSGI HTTP Server)
+* **Serialization:** Pickle
+
+### Frontend
+* **Framework:** Next.js (React)
+* **Styling:** Tailwind CSS
+* **Networking:** Axios
+
+### DevOps & Infrastructure
+* **Reverse Proxy:** Nginx
+* **Process Management:** PM2
+* **Security:** UFW (Uncomplicated Firewall), SSL/TLS
+* **Environment:** Ubuntu Linux
+
+---
+
+## Installation & Configuration
+
+### Prerequisites
+* Python 3.8+
+* Node.js & npm
+* Git
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/elbertChao/strawberryWeb.git](https://github.com/elbertChao/strawberryWeb.git)
 cd strawberryWeb
+```
+2. Backend Setup (Flask)
+Navigate to the server directory and establish the Python environment.
 
-## 🖥️ Backend Setup (Flask):
-2️⃣ Create a Virtual Environment
-python -m venv venv  # Create virtual environment
+Create and Activate Virtual Environment:
 
-3️⃣ Activate the Virtual Environment
-Windows:
+```
+# Windows
+python -m venv venv
 venv\Scripts\activate
+```
 
-Linux/macOS:
+```
+# Linux/macOS
+python -m venv venv
 source venv/bin/activate
+```
 
-4️⃣ Install Dependencies
+Install Dependencies:
+```
 pip install -r requirements.txt
+```
 
-5️⃣ Ensure ML Model is in Place
-The trained model (model_CPU.pkl) is ignored in .gitignore.
-Upload it manually to /server/ using SCP or FileZilla.
+Model Configuration:
 
-## 🚀 Running the Backend:
-cd server
-gunicorn -w 4 -b 0.0.0.0:5000 server:app
+Note: The trained model file (model_CPU.pkl) is excluded from version control.
 
-or run it manually:
+Manually place the model_CPU.pkl file into the /server/ directory via secure transfer (SCP/SFTP).
+
+Start the Server: For development:
+
+```
 python server.py
+```
 
-## 🌐 Frontend Setup (Next.js):
-1️⃣ Navigate to the Frontend Folder
+For production (Gunicorn):
+
+```
+gunicorn -w 4 -b 0.0.0.0:5000 server:app
+```
+3. Frontend Setup (Next.js)
+Navigate to the application directory to configure the client-side interface.
+
+```
 cd ../strawberry-app
-
-2️⃣ Install Dependencies
 npm install
-
-3️⃣ Run the Frontend Locally
 npm run dev
+```
+The application will be available at http://localhost:3000.
 
-## ⚙️ Deployment:
-Demonstrated in a private document created by me (Elbert Chao)
+Deployment & Maintenance
+The application is architected for a Linux environment using Nginx as a reverse proxy to forward requests to the Gunicorn application server.
 
-## 🔍 Troubleshooting
-Use sudo or check file permissions (chmod 644)
+Service Management:
 
-Run sudo journalctl -u flask -f to check logs
+Restart Services: ```sudo systemctl restart nginx flask```
 
-Ensure NEXT_PUBLIC_API_URL in .env.production is correctly set
+Logs: ```sudo journalctl -u flask -f```
 
-Restart services: sudo systemctl restart nginx flask
-
-## 📚 Technologies Used:
-
-🔧 Backend
-Python (Flask, Gunicorn)
-PyTorch (Machine Learning Model)
-REST APIs
-Pickle (Model Serialization)
-
-🎨 Frontend
-Next.js (React Framework)
-Tailwind CSS (UI Styling)
-Axios (API Calls)
-
-🛠️ DevOps & Deployment
-Nginx (Reverse Proxy)
-Gunicorn (Flask Server)
-PM2 (Process Management)
-UFW (Firewall Rules)
-SSL Certificates (Sectigo CA)
-FileZilla/SCP (File Transfer)
+Environment Variables: Ensure the NEXT_PUBLIC_API_URL variable in .env.production is configured to point to the correct backend endpoint.
