@@ -1,6 +1,7 @@
 # 🍓 BerryVision (A Strawberry Ripeness & Disease Detection Web App)
 AI-Powered Full-Stack Web Application for Monitoring Strawberry Health
 This project provides an AI-driven web application that helps farmers analyze strawberry ripeness and detect diseases using machine learning models. It consists of a Next.js frontend and a Flask backend, integrating a trained model for image segmentation.
+Hosted live here: https://strawberry.uwo.ca/
 
 ## Features:
 AI-Based Image Processing - Uses a trained ML model to assess strawberry ripeness and disease conditions
