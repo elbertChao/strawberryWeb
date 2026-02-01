@@ -6,7 +6,10 @@ BerryVision is an AI-powered full-stack web application designed to modernize ag
 This project demonstrates the end-to-end integration of a PyTorch machine learning pipeline with a responsive Next.js frontend and a scalable Flask backend.
 
 **Live Deployment:** [https://strawberry.uwo.ca/](https://strawberry.uwo.ca/)
-**System Demonstration:** [Watch Video Demo](https://www.youtube.com/watch?v=d8iLLYVc4kI)
+
+**System Demonstration:**
+
+[![BerryVision Demo](https://img.youtube.com/vi/d8iLLYVc4kI/0.jpg)](https://www.youtube.com/watch?v=d8iLLYVc4kI)
 
 ## Key Features
 * **AI-Driven Analysis:** Utilizes a custom-trained machine learning model to segment and classify agricultural imagery with high precision.
